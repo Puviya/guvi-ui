@@ -92,7 +92,10 @@ function update(){
     data: JSON.stringify(updates_det),
     contentType: "application/json",
     success: function (data) {
-      console.log(data);
+      if(data.update_status == "update_success"){
+        alert("Update success!!!!");
+        window.location.href = "course_id.html";
+      }
     }
 
   })
