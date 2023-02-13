@@ -41,7 +41,7 @@ $(document).ready(function () {
                 if(data['status']=="success" || data['status']=="exists"){
                     window.location.href='course_id.html'
                     console.log("success") 
-                    localStorage.setItem('key', data['key'])  
+                    localStorage.setItem('key', data['key'])
                 }else if(data['status']=="incorrect"){
                     $("#error").html("Password incorrect")
                 }else if(data['status']=="invalid"){
