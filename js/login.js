@@ -12,6 +12,12 @@ if (session_id) {
     var page = "./course_id.html";
     window.location.href = page;
 }
+var session_id = window.localStorage.getItem('key');
+
+if (session_id) {
+    var page = "./course_id.html";
+    window.location.href = page;
+}
 $(document).ready(function () {
     $("#btnlogin").click(function () {
         if($("#username").val()=="" && $("#password").val()==""){
