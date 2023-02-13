@@ -1,7 +1,6 @@
 // Document is ready
 $(document).ready(function () {
     $("#btnlogin").click(function () {
-        //console.log("hloo")
         if($("#username").val()=="" && $("#password").val()==""){
             $("#error").html("All fields are required")
         }
@@ -14,26 +13,16 @@ $(document).ready(function () {
             $("#usercheck").hide()
             $("#passcheck").html("Enter Password")
         }
-        // form_data = new FormData();
-        // form_data.append("username",$('#username').val());
-        // form_data.append('password',$('#password').val());
+        
         const data = {"username":$("#username").val(),"password":$("#password").val()}
 
         
         $.ajax({
             type : 'POST',
             url : 'http://localhost:5000/login',
-            // headers: {
-            //     'Content-Type': 'multipart/form-data/application/json'
-            // },
-            //data : JSON.stringify(data),
+        
             data : $("#datas").serialize(),
-            // data : {
-            //     username:$('#username').val(),
-            //     password:$('#password').val()
-            // },
-            //datatype : 'JSON',
-            //data : data,
+    
             processData : false,
             success:function(data){
                 console.log(data);
@@ -54,23 +43,3 @@ $(document).ready(function () {
         }); 
     });
 });
-// function validateUsername() {
-//     let usernameValue = $("#username").val();
-//     if (usernameValue.length == "") {
-//     $("#usercheck").show();
-//     usernameError = false;
-//     return false;
-//     } else {
-//     $("#usercheck").hide();
-//     }
-// }
-// function validatePassword() {
-//     let passwordValue = $("#password").val();
-//     if (passwordValue.length == "") {
-//     $("#passcheck").show();
-//     passwordError = false;
-//     return false;
-//     }else {
-//     $("#passcheck").hide();
-//     }
-// }
