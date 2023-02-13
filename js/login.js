@@ -1,4 +1,10 @@
 // Document is ready
+var session_id = window.localStorage.getItem('key');
+
+if (session_id) {
+    var page = "./course_id.html";
+    window.location.href = page;
+}
 $(document).ready(function () {
     $("#btnlogin").click(function () {
         if($("#username").val()=="" && $("#password").val()==""){
@@ -21,11 +27,11 @@ $(document).ready(function () {
             type : 'POST',
             url : 'http://localhost:5000/login',
         
-            data : $("#datas").serialize(),
-    
+            //data : $("#datas").serialize(),
+            data : JSON.stringify(data),
             processData : false,
             success:function(data){
-                console.log(data);
+                // console.log(data);
                 console.log(data['status']);
                 if(data['status']=="success" || data['status']=="exists"){
                     window.location.href='course_id.html'
