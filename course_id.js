@@ -82,8 +82,11 @@ $(document).ready(function () {
             }
             
           }
-          else {
-            alert("Type correct course_id")
+          else if(data.status=="invalid") {
+            alert("Enter a Valid course_Id");
+          }
+          else if(data.status=="login"){
+            window.location.href = "login.html";
           }
         }
           
