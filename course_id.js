@@ -1,3 +1,10 @@
+var session_id = window.localStorage.getItem('key');
+
+if (!session_id) {
+    var page = "./login.html";
+    window.location.href = page;
+}
+
 $(document).ready(function () {
   $("#course_form").submit(function (e) {
     e.preventDefault();
@@ -60,6 +67,7 @@ $(document).ready(function () {
               var updates_det = {
                 update: data.update
               }
+              
               $.ajax({
                 method: 'POST',
                 url: 'http://127.0.0.1:5000/course_status',
