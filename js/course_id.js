@@ -1,5 +1,6 @@
 var session_id = window.localStorage.getItem('key');
 var updates_det;
+var changes;
 
 if (!session_id) {
     var page = "./login.html";
@@ -23,6 +24,8 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (data) {
           if (data.status == "success") {
+            changes = data.changes;
+
             // document.getElementById("course_id_page").style.display = "none";
             document.querySelector(".content").style.display = "none";
             $("#coursenamestatus").html(data.course_name);
@@ -47,6 +50,8 @@ $(document).ready(function () {
                 "course_id" : course_id,
                 'update': true
               };
+
+              //const availBtn = document.getElementById("updatesstatus");
             }
             else {
               $("#updatesstatus").html("Unavailable");
@@ -69,6 +74,7 @@ $(document).ready(function () {
 
             // document.getElementById("course_id_individual_page").style.display = "block";
             document.querySelector(".container").style.display = "block";
+            //alert("Changes :\n"+JSON.stringify(changes));
             
           }
           if(data.status =="login"){
@@ -87,6 +93,7 @@ $(document).ready(function () {
 });
 
 function update(){
+  //prompt("Changes :\n", JSON.stringify(changes));
   $.ajax({
     method: 'POST',
     url: 'http://127.0.0.1:5000/update_concern',
@@ -101,4 +108,17 @@ function update(){
     }
 
   })
+}
+
+function showChanges(){
+  let old = JSON.stringify(changes['old']);
+  let curr = JSON.stringify(changes['new']);
+
+  if(old=="{}" && curr=="{}"){
+    alert("No updates available");
+  }
+  else{
+    alert("Changes :\n old : "+old +"\nNew : "+curr);
+  }
+  
 }
