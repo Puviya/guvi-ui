@@ -27,11 +27,11 @@ $(document).ready(function () {
             type : 'POST',
             url : 'http://localhost:5000/login',
         
-            data : $("#datas").serialize(),
-    
+            //data : $("#datas").serialize(),
+            data : JSON.stringify(data),
             processData : false,
             success:function(data){
-                console.log(data);
+                // console.log(data);
                 console.log(data['status']);
                 if(data['status']=="success" || data['status']=="exists"){
                     window.location.href='course_id.html'
