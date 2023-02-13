@@ -46,7 +46,189 @@
 </div> 
 </div>
 
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="course_id.js"></script>
+    <style>
+    #course_id_individual_page{
+      display:none;
+    }
+   #video_close{
+    display:none;
 
+   }
+   #quiz_close{
+    display:none;
+   }
+   #live_close{
+    display:none;
+   }
+    #courseId{
+      background-color: #d9d9d9;
+    }
+    #course_id_submit{
+      background-color: black
+    }
+    #update_btn{
+      width:230px;
+    }
+          .ver_line{
+            height: 60vh;
+            border-left: 5px solid black
+          }
+           
+      .content {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
 
-</body>
+      @media only screen and (max-width: 979px) {
+        #update_btn {
+          margin-bottom: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="course_id_page">
+    <div class="text-left">
+      <nav class="navbar bg-dark">
+        <div class="row">
+          <h5 class="text-white">Courses Suite</h5>
+        </div>
+      </nav>
+    </div>
+    <div class="content">
+      <div class="align-self-center">
+        <div class="row justify-content-center">
+          <form id="course_form" action="" method="post" autocomplete="off">
+            
+            <div class="form-group">
+              <label
+                for="courseId"
+                class="row justify-content-center align-items-center font-weight-bold p-3 h4"
+                >Course ID</label
+              >
+            
+              <input
+                type="text"
+                class="form-control p-3"
+                
+                id="courseId"
+                name="course_ID"
+              />
+              <h6 id="error" class="text-danger"></h6>
+            </div>
+            <div class="row justify-content-center align-items-center p-3">
+              <button
+                type="submit"
+                class="text-light p-2 rounded"
+                
+                id="course_id_submit"
+                value="submit"
+              >
+                Check Live Status
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="course_id_individual_page">
+  <nav class="navbar navbar-dark bg-dark">
+      <span class="navbar-brand mb-0 h1">Course Suite</span>
+    </nav>
+    <br />
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-7">
+          <p class="text-left" id="coursename">
+            Course Name :<span id="coursenamestatus"> </span>
+          </p>
+          <p class="text-left" id="courseid">
+            Course ID :<span id="courseidstatus"> </span>
+          </p>
+          <p class="text-left" id="courselang">
+            Course Language :<span id="courselangstatus"> </span>
+          </p>
+          <p class="text-left" id="livestatus">
+            Live Status :<span id="livestatusstatus" >
+              </span
+            >
+          </p>
+          <p class="text-left" id="updates">
+            Updates :
+            <span id="updatesstatus" > </span
+            ><br />
+          </p>
+          <br />
+          <button
+            type="button"
+            class="btn btn-success btn-block"
+            id="update_btn"
+          
+          >
+            Update
+          </button>
+        </div>
+
+        <div class="col-lg-1 d-none d-lg-block d-xl-block" style="height: 60vh">
+          <div
+            class="w-100 border-dark ver_line"
+           
+          ></div>
+        </div>
+        <div class="col-lg-5">
+          <img
+            src="./images/download.png"
+            class="rounded"
+            alt="image not available"
+            id="image_preview"
+          />
+          <br /><br />
+          <p class="h5 font-weight-bold">Diagnostics</p>
+          <div class="row">
+            <div class="col">
+              <span><p>Video Integrity</p></span>
+              <span><p>Quiz integrity</p></span>
+              <span><p>Ready to take Live</p></span>
+            </div>
+            <div class="col">
+              <p>
+                <i id="video_check" class="fa fa-check text-success" ></i>
+                <i id="video_close" class="fa fa-close text-danger" ></i>
+              </p>
+              <p>
+                <i id="quiz_check" class="fa fa-check text-success" ></i>
+                <i id="quiz_close" class="fa fa-close text-danger" ></i>
+              </p>
+              <p>
+                <i id="live_check" class="fa fa-check text-success" ></i>
+                <i id="live_close" class="fa fa-close text-danger" ></i>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+  </body>
 </html>
