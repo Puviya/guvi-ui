@@ -23,7 +23,8 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (data) {
           if (data.status == "success") {
-            document.getElementById("course_id_page").style.display = "none";
+            // document.getElementById("course_id_page").style.display = "none";
+            document.querySelector(".content").style.display = "none";
             $("#coursenamestatus").html(data.course_name);
             $("#courseidstatus").html(data.course_id);
             $("#courselangstatus").html(data.lang);
@@ -66,7 +67,8 @@ $(document).ready(function () {
               document.getElementById("quiz_check").style.display = "none";
             }
 
-            document.getElementById("course_id_individual_page").style.display = "block";
+            // document.getElementById("course_id_individual_page").style.display = "block";
+            document.querySelector(".container").style.display = "block";
             
           }
           if(data.status =="login"){
