@@ -1,3 +1,10 @@
+var session_id = window.localStorage.getItem('key');
+
+if (session_id) {
+    var page = "./course_id.html";
+    window.location.href = page;
+}
+
 // Document is ready
 $(document).ready(function () {
     $("#btnlogin").click(function () {
@@ -20,13 +27,11 @@ $(document).ready(function () {
         $.ajax({
             type : 'POST',
             url : 'http://localhost:5000/login',
-        
-            data : $("#datas").serialize(),
-    
+            data : JSON.stringify(data),
+            dataType: "JSON",
+            contentType: "application/json",
             processData : false,
             success:function(data){
-                console.log(data);
-                console.log(data['status']);
                 if(data['status']=="success" || data['status']=="exists"){
                     window.location.href='course_id.html'
                     console.log("success") 
