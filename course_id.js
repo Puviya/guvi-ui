@@ -62,25 +62,7 @@ $(document).ready(function () {
               document.getElementById("quiz_check").style.display = "none";
             }
 
-            document.getElementById("course_id_individual_page").style.display = "block";
-            if (data.update == true) {
-              var updates_det = {
-                update: data.update
-              }
-              
-              $.ajax({
-                method: 'POST',
-                url: 'http://127.0.0.1:5000/course_status',
-                datatype: 'json',
-                data: JSON.stringify(updates_det),
-                contentType: "application/json",
-                success: function (data) {
-                  alert(data);
-                }
-
-              })
-            }
-            
+            document.getElementById("course_id_individual_page").style.display = "block"
           }
           else if(data.status=="invalid") {
             alert("Enter a Valid course_Id");
@@ -94,5 +76,23 @@ $(document).ready(function () {
  
     }
   });
+ function update()
+ {
+ 
+    var update = {
+      course_id: course_id,
+     "update":true
+    };
+ $.ajax({
+      method: POST,
+      url: "http://127.0.0.1:5000/update_concern",
+      datatype: 'json',
+      data: JSON.stringify(update),
+      success: function (data) {
+        alert(data.update_status);
+      }
+ }) 
+  }
+  
 });
 
