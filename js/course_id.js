@@ -15,9 +15,7 @@ else {
   var prev = window.localStorage.getItem("time")
    if (prev) {
     var ses_time = new Date().getTime();
-    console.log(ses_time)
     if (ses_time-prev>=hr) {
-      console.log("hey")
       $.ajax({
         method: 'POST',
         url: "http://127.0.0.1:5000/session_delete",
@@ -32,7 +30,7 @@ else {
   })
     }
     else {
-      console.log("no")
+      
     }
    
   } 
