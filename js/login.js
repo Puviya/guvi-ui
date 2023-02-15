@@ -44,10 +44,14 @@ $(document).ready(function () {
             contentType: "application/json",
             processData : false,
             success:function(data){
-                if(data['status']=="success" || data['status']=="exists"){
-                    window.location.href='course_id.html'
-                    console.log("success") 
-                    localStorage.setItem('key', data['key'])  
+                if(data['status']=="success" && data["key"] != null){
+                    window.location.href='course_id.html';
+                    console.log("success");
+                    localStorage.setItem('key', data['key']);  
+                }else if(data['status']==null && data["key"] == null){
+                    $("#error").html("Redis server error")
+                }else if(data['status']=="exists"){
+                    window.location.href='course_id.html';
                 }else if(data['status']=="incorrect"){
                     $("#error").html("Password incorrect")
                 }else if(data['status']=="invalid"){
