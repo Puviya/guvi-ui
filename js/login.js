@@ -4,6 +4,7 @@ if (session_id) {
     var page = "./course_id.html";
     window.location.href = page;
 }
+
 // Document is ready
 var session_id = window.localStorage.getItem('key');
 
@@ -19,7 +20,6 @@ if (session_id) {
 }
 $(document).ready(function () {
     $("#btnlogin").click(function () {
-        $("#loading").show();
         if($("#username").val()=="" && $("#password").val()==""){
             $("#error").html("All fields are required")
         }
@@ -31,7 +31,7 @@ $(document).ready(function () {
             $("#error").hide()
             $("#usercheck").hide()
             $("#passcheck").html("Enter Password")
-        }     
+        }       
         const data = {"username":$("#username").val(),"password":$("#password").val()}
         $.ajax({
             type : 'POST',
@@ -41,7 +41,6 @@ $(document).ready(function () {
             contentType: "application/json",
             processData : false,
             success:function(data){
-                $("#loading").hide();
                 if(data['status']=="success" || data['status']=="exists"){
                     window.location.href='course_id.html'
                     console.log("success") 

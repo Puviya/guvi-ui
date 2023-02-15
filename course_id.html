@@ -16,6 +16,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./js/course_id.js"></script>
     <script src="./js/logout.js"></script>
     <style>
@@ -66,6 +68,7 @@
     </style>
   </head>
   <body>
+
     <div id="course_id_page">
     <div class="text-left">
       <nav class="navbar navbar-dark bg-dark">
@@ -103,7 +106,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> 
   <div id="course_id_individual_page">
   <!-- <nav class="navbar navbar-dark bg-dark">
       <span class="navbar-brand mb-0 h1">Course Suite</span>
@@ -128,8 +131,9 @@
           </p>
           <p class="text-left" id="updates">
             Updates :
-            <span id="updatesstatus" onclick="showChanges()"> </span
-            ><br />
+            <span  id="updatesstatus" onclick="showChanges()" data-toggle="modal" data-target="#staticBackdrop"> </span
+            >
+            <br />
           </p>
           <br />
           <button
@@ -182,5 +186,41 @@
       </div>
     </div> 
   </div>
+
+<!-- visual comparison of changes/updates in modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+<!-- Modal header content-->
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Changes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+<!-- Modal body content -->
+      <div class="modal-body">
+          <table class="table table-bordered">
+              <thead>
+                  <tr >
+                      <th  scope="col"></th>
+                      <th  scope="col">Lesson</th>
+                      <th  scope="col">Field</th>
+                      <th  scope="col">old</th>
+                      <th  scope="col">new</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table"></tbody>
+              </tbody>
+            </table>
+      </div>
+<!-- Footer content -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
   </body>
 </html>

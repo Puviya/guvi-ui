@@ -14,6 +14,7 @@ $(document).ready(function () {
     var course_id = document.getElementById("courseId").value;
      if (course_id=="") {
       $("#error").html("<br>This Field Required");
+      //byPassSecondPage();
     } else {
        var dict = {"course_id": $("#courseId").val()};
       
@@ -27,7 +28,6 @@ $(document).ready(function () {
           if (data.status == "success") {
             $("#loading").hide();
             changes = data.changes;
-
             // document.getElementById("course_id_page").style.display = "none";
             document.querySelector(".content").style.display = "none";
             $("#coursenamestatus").html(data.course_name);
@@ -112,16 +112,68 @@ function update(){
 
   })
 }
-
+// function for visual comparison of changes/updates 
 function showChanges(){
-  let old = JSON.stringify(changes['old']);
-  let curr = JSON.stringify(changes['new']);
-
-  if(old=="{}" && curr=="{}"){
-    alert("No updates available");
-  }
-  else{
-    alert("Changes :\n old : "+old +"\nNew : "+curr);
-  }
-  
+  // if(true){
+  //   const data = {
+  //     "1": {
+  //         "Field": "number",
+  //         "db": "course",
+  //         "lesson_id": "aFTEREFFECTSTAMILTUTORIAL999",
+  //         "new": 8,
+  //         "previous": 1
+  //     },
+  //     "2": {
+  //         "Field": "level",
+  //         "db": "course",
+  //         "lesson_id": "aFTEREFFECTSTAMILTUTORIAL",
+  //         "new": "l1",
+  //         "previous": "l2"
+  //     }
+  // }
+  // appendTable(data);
+  // return;
+  // }
+  $.ajax({
+    type : 'POST',
+    url : 'http://localhost:5000/course_changes',
+    data : $("#courseId").val(),
+    dataType: "JSON",
+    contentType: "application/json",
+    processData : false,
+    success:function(data){  
+      appendTable(data);
+    },
+});  
 }
+
+function appendTable(data){
+  Object.keys(data).forEach(element => {
+      var row =  `<tr>
+          <td >${data[element].db}</td>
+          <td >${data[element].lesson_id}</td>
+          <td >${data[element].Field}</td>
+          <td >${data[element].previous}</td>
+          <td >${data[element].new}</td>
+      </tr>`
+ $("#table").append(row);
+  });
+}
+
+// function byPassSecondPage(){
+//   document.querySelector(".content").style.display = "none";
+//   $("#coursenamestatus").html("data.course_name");
+//   $("#courseidstatus").html("data.course_id");
+//   $("#courselangstatus").html("data.lang");
+
+//   $("#livestatusstatus").html("Live");
+
+//   $("#livestatusstatus").html("No Live");
+
+//   $("#updatesstatus").html("Available");
+//   document.getElementById("live_check").style.display = "block";
+//   document.getElementById("live_close").style.display = "block";
+//   //updateBtn.disabled = false;
+//   document.getElementById("video_check").style.display = "block";
+//   document.querySelector(".container").style.display = "block";
+// }
