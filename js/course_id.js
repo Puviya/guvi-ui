@@ -64,6 +64,7 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (data) {
           if (data.status == "success") {
+            //document.getElementById("course_id_page").style.display = "none";
             $.when(
               $.ajax({
                 method: "POST",
@@ -73,6 +74,16 @@ $(document).ready(function () {
                 contentType: "application/json",
                 success: function(data){
                   console.log("working-course_changes api");
+                  console.log(data);
+                  if (data.status == true) {
+                    $("#updatesstatus").html("Available");
+                    document.getElementById("updatesstatus").style.color = "green";
+                  
+                  }
+                  else {
+                    $("#updatesstatus").html("Un Available");
+                    document.getElementById("updatesstatus").style.color = "red";
+                  }
                 }
               }),
 
@@ -83,6 +94,8 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
+                  console.log("working-check_video api");
+                  console.log(data);
                   if(data.status == true){
                     document.getElementById("video_check").style.display = "block"
                   }
@@ -100,6 +113,8 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
+                  console.log("working-check_quiz api");
+                  console.log(data);
                   if(data.status == true){
                     document.getElementById("quiz_check").style.display = "block"
                   }
@@ -117,7 +132,9 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
-                  if(data.live == true){
+                  console.log("working-check_live api");
+                  console.log(data);
+                  if(data.status == true){
                     $("#livestatusstatus").html("Live");
                     document.getElementById("livestatusstatus").style.color = "green";
                     document.getElementById("live_check").style.display = "block";
@@ -129,8 +146,8 @@ $(document).ready(function () {
                   }
                 }
             },()=>{});
-            document.getElementById("course_id_page").style.display = "none";
             document.querySelector(".content").style.display = "none";
+            document.querySelector(".container").style.display = "block";
             $("#coursenamestatus").html(data.course_name);
             $("#courseidstatus").html(data.course_id);
             $("#courselangstatus").html(data.lang);
@@ -145,7 +162,7 @@ $(document).ready(function () {
         }
        
           
-      })
+      });
     
   });
 
@@ -155,7 +172,7 @@ function update(){
   //prompt("Changes :\n", JSON.stringify(changes));
   $.ajax({
     method: 'POST',
-    url: 'http://127.0.0.1:5000/update_concern',
+    url: 'http://127.0.0.1:5000/update',
     datatype: 'json',
     data: JSON.stringify(updates_det),
     contentType: "application/json",
