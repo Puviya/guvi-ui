@@ -48,7 +48,7 @@ $(document).ready(function () {
                     window.location.href='course_id.html';
                     console.log("success");
                     localStorage.setItem('key', data['key']);  
-                }else if(data['status']=="success" && data["key"] == null){
+                }else if(data['status']==null && data["key"] == null){
                     $("#error").html("Redis server error")
                 }else if(data['status']=="exists"){
                     window.location.href='course_id.html';
