@@ -9,6 +9,7 @@ if (!session_id) {
 
 $(document).ready(function () {
   $("#course_form").submit(function (e) {
+    $("#loading").show();
     e.preventDefault();
     var course_id = document.getElementById("courseId").value;
      if (course_id=="") {
@@ -24,6 +25,7 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (data) {
           if (data.status == "success") {
+            $("#loading").hide();
             changes = data.changes;
 
             // document.getElementById("course_id_page").style.display = "none";
@@ -101,6 +103,7 @@ function update(){
     data: JSON.stringify(updates_det),
     contentType: "application/json",
     success: function (data) {
+      $("#loading").hide();
       if(data.update_status == "update_success"){
         alert("Update success!!!!");
         window.location.href = "course_id.html";
