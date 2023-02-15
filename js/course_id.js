@@ -57,13 +57,13 @@ $(document).ready(function () {
       var dict = {"course_id": $("#courseId").val(), "session_id": session_id};
 
       $.ajax({
-        method:'POST',
+        method: 'POST',
         url: 'http://127.0.0.1:5000/course_status',
         datatype: 'JSON',
         data: JSON.stringify(dict),
         contentType: "application/json",
-        success: function(data){
-          if(data.status == "success"){ 
+        success: function (data) {
+          if (data.status == "success") {
             $.when(
               $.ajax({
                 method: "POST",
@@ -76,7 +76,7 @@ $(document).ready(function () {
                 }
               }),
 
-              $.ajax({
+               $.ajax({
                 method: "POST",
                 url: 'http://127.0.0.1:5000/check_video',
                 datatype: 'JSON',
@@ -128,23 +128,28 @@ $(document).ready(function () {
                     document.getElementById("live_close").style.display = "block";
                   }
                 }
-            }, ()=>{});
+            },()=>{});
             document.getElementById("course_id_page").style.display = "none";
             document.querySelector(".content").style.display = "none";
             $("#coursenamestatus").html(data.course_name);
             $("#courseidstatus").html(data.course_id);
             $("#courselangstatus").html(data.lang);
+          })
+          
           }
         },
         error: function(response){
           console.log(response);
         }
+      });
+        }
+       
           
       })
-    }
+    
   });
 
-});
+
 
 function update(){
   //prompt("Changes :\n", JSON.stringify(changes));
