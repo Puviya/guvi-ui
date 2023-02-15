@@ -10,7 +10,7 @@ if (!session_id) {
 else {
   
   const toMilliseconds = (hrs,min,sec) => (hrs*60*60+min*60+sec)*1000;
-  let hr=toMilliseconds(24,0,0);
+  let hr=toMilliseconds(0,15,0);
   var dict = {"session_id":session_id};
   var prev = window.localStorage.getItem("time")
    if (prev) {
