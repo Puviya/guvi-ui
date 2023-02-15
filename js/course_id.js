@@ -7,6 +7,45 @@ if (!session_id) {
     window.location.href = page;
 }
 
+else {
+  
+  const toMilliseconds = (hrs,min,sec) => (hrs*60*60+min*60+sec)*1000;
+  let hr=toMilliseconds(0,1,0);
+  var dict = {"session_id":session_id};
+  var prev = window.localStorage.getItem("time")
+   if (prev) {
+    var ses_time = new Date().getTime();
+    console.log(ses_time)
+    if (ses_time-prev>=hr) {
+      console.log("hey")
+      $.ajax({
+        method: 'POST',
+        url: "http://127.0.0.1:5000/session_delete",
+        data: JSON.stringify(dict),
+        success: function (res) {
+          console.log(res)
+          window.localStorage.removeItem("key");
+          window.localStorage.removeItem("time");
+          var page = "./login.html";
+          window.location.href = page;
+        }
+  })
+    }
+    else {
+      console.log("no")
+    }
+   
+  } 
+  
+  window.setInterval(function(){
+    current_date = new Date().getTime()
+    //  console.log(current_date)
+    window.localStorage.setItem("time",current_date)
+    
+    
+  },1000)
+}
+
 $(document).ready(function () {
   $("#course_form").submit(function (e) {
     e.preventDefault();
