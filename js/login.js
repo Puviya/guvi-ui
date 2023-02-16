@@ -20,6 +20,7 @@ if (session_id) {
 }
 $(document).ready(function () {
     $("#btnlogin").click(function () {
+        $("#loading").show();
         if($("#username").val()=="" && $("#password").val()==""){
             $("#error").html("All fields are required")
         }
@@ -41,6 +42,7 @@ $(document).ready(function () {
             contentType: "application/json",
             processData : false,
             success:function(data){
+                $("#loading").hide();
                 if(data['status']=="success" || data['status']=="exists"){
                     window.location.href='course_id.html'
                     console.log("success") 
