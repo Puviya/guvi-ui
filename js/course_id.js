@@ -2,6 +2,7 @@ var session_id = window.localStorage.getItem('key');
 var updates_det;
 var changes;
 
+
 if (!session_id) {
     var page = "./login.html";
     window.location.href = page;
