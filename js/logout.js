@@ -8,7 +8,9 @@ $(document).ready(function () {
             contentType: "application/json",     
             success:function(data){
                 if(data.status == "success"){
+                    localStorage.removeItem('time');
                     localStorage.removeItem('key');
+                   
                 }
                 window.location.href="login.html"; 
             }
