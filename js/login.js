@@ -44,10 +44,10 @@ $(document).ready(function () {
             contentType: "application/json",
             processData : false,
             success:function(data){
+                console.log(data);
                 if(data['status']=="success" && data["key"] != null){
-                    window.location.href='course_id.html';
-                    console.log("success");
-                    localStorage.setItem('key', data['key']);  
+                    localStorage.setItem('key', data['key']);
+                    window.location.href='course_id.html';  
                 }else if(data['status']==null && data["key"] == null){
                     $("#error").html("Redis server error")
                 }else if(data['status']=="exists"){
