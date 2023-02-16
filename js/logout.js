@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $("#logout").on("click", function () { 
+        $("#loading").show();
         $.ajax({
             type : 'POST',
             url : 'http://localhost:5000/session_delete',
@@ -7,6 +8,7 @@ $(document).ready(function () {
             dataType: "JSON",
             contentType: "application/json",     
             success:function(data){
+                $("#loading").hide();
                 if(data.status == "success"){
                     localStorage.removeItem('time');
                     localStorage.removeItem('key');

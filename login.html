@@ -19,38 +19,43 @@
     } </style>
 </head>
 <body>
-    <!-- //-----------Navgation Bar--------------------- -->
-    <div class="text-left">
-      <nav class="navbar bg-dark">
-        <div class="row p-2">
-          <h5 class="text-white">Course Suite</h5>
-        </div>
-      </nav>
+<!-- Navgation Bar -->
+<div class="text-left">
+  <nav class="navbar bg-dark">
+    <div class="row p-2">
+      <h5 class="text-white">Course Suite</h5>
     </div>
-    <!-- ------------------------------Form Tag---------------------------------- -->
-    <div class="content">
-    <div class="align-content-center">
-      <div class="row justify-content-center">
-        <form id="datas">
-          <div class="form-group">
-            <label for="username" class="row justify-content-center align-items-center">Username</label>
-            <input type="text" class="form-control bg-light" id="username" name="username" >
-            <p id="usercheck" style="color: red;"></p>
-          </div>
-          <div class="form-group" >
-            <label for="password" class="row justify-content-center align-items-center">Password</label>
-            <input type="password" class="form-control bg-light" id="password" name="password" >
-            <p id="passcheck" style="color: red;"></p>
-          </div>
-          <div class="row justify-content-center">
-            <p id="error" style="color: red;"></p>
-          </div>
-          <div class="row justify-content-center">
-            <button type="button" id="btnlogin" class="btn btn-dark">Login</button>
-          </div>
-        </form>
+  </nav>
+</div>
+<!-- Form Tag -->
+<div class="content">
+<div class="align-content-center">
+  <div class="row justify-content-center">
+    <form id="datas">
+<!-- Username -->
+      <div class="form-group">
+        <label for="username" class="row justify-content-center align-items-center">Username</label>
+        <input type="text" class="form-control bg-light" id="username" name="username" >
+        <p id="usercheck" style="color: red;"></p>
       </div>
-    </div>
-    </div>
+<!-- password -->
+      <div class="form-group" >
+        <label for="password" class="row justify-content-center align-items-center">Password</label>
+        <input type="password" class="form-control bg-light" id="password" name="password" >
+        <p id="passcheck" style="color: red;"></p>
+      </div>
+<!-- response -->
+      <div class="row justify-content-center">
+        <p id="error" style="color: red;"></p>
+      </div>
+<!-- form submit button -->
+      <div class="row justify-content-center">
+        <button type="button" id="btnlogin" class="btn btn-dark"><span class="spinner-border spinner-border-sm" style="display: none;" id="loading"></span> Login</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
 </body>
 </html>

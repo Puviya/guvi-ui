@@ -20,7 +20,8 @@ if (session_id) {
 }
 $(document).ready(function () {
     $("#btnlogin").click(function () {
-        if(($("#username").val()).trim()=="" && ($("#password").val()).trim()==""){
+        $("#loading").show();
+        if($("#username").val()=="" && $("#password").val()==""){
             $("#error").html("All fields are required")
         }
         else if(($("#username").val()).trim()==""){
@@ -30,8 +31,6 @@ $(document).ready(function () {
         }
         else{
         const data = {"username":$("#username").val(),"password":$("#password").val()}
-
-        
         $.ajax({
             type : 'POST',
             url : 'http://localhost:5000/login',
@@ -40,7 +39,7 @@ $(document).ready(function () {
             contentType: "application/json",
             processData : false,
             success:function(data){
-                console.log(data);
+                $("#loading").hide();
                 if(data['status']=="success" && data["key"] != null){
                     localStorage.setItem('key', data['key']);
                     window.location.href='course_id.html';  
