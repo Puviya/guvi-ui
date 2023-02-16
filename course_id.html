@@ -100,7 +100,7 @@
               <h6 id="error" class="text-danger"></h6>
             </div>
             <div class="row justify-content-center align-items-center p-3">
-              <button type="submit" class="text-light p-2 rounded" id="course_id_submit" value="submit"><span class="spinner-border spinner-border-sm" style="display: none;" id="loading"></span> Check Live Status</button>
+              <button type="submit" class="text-light p-2 rounded" id="course_id_submit" value="submit"><span class="spinner-border spinner-border-sm" style="display: none;" id="spining"></span> Check Live Status</button>
             </div>
           </form>
         </div>
@@ -120,7 +120,7 @@
           </p>
           <p class="text-left" id="courseid">
             Course ID :<span id="courseidstatus"> </span>
-          </p>
+          </ps>
           <p class="text-left" id="courselang">
             Course Language :<span id="courselangstatus"> </span>
           </p>
@@ -199,7 +199,7 @@
         </button>
       </div>
 <!-- Modal body content -->
-      <div class="modal-body">
+      <div class="modal-body" id = "changes-modal">
           <table class="table table-bordered">
               <thead>
                   <tr >
@@ -222,5 +222,6 @@
     </div>
   </div>
 </div>
+
   </body>
 </html>

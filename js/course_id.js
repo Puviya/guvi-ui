@@ -1,5 +1,4 @@
 var session_id = window.localStorage.getItem('key');
-var updates_det;
 var changes;
 
 if (!session_id) {
@@ -42,7 +41,6 @@ else {
 
 $(document).ready(function () {
   $("#course_form").submit(function (e) {
-    $("#loading").show();
     e.preventDefault();
     var course_id = document.getElementById("courseId").value;
     if (course_id=="") {
@@ -50,7 +48,7 @@ $(document).ready(function () {
     }
     else {
       var dict = {"course_id": $("#courseId").val(), "session_id": session_id};
-
+      $("#spining").show();
       $.ajax({
         method: 'POST',
         url: 'http://127.0.0.1:5000/course_status',
@@ -68,13 +66,14 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
+                  changes = data;
                   if (data.status == true) {
                     $("#updatesstatus").html("Available");
                     document.getElementById("updatesstatus").style.color = "green";
                   
                   }
                   else {
-                    $("#updatesstatus").html("Un Available");
+                    $("#updatesstatus").html("Unavailable");
                     document.getElementById("updatesstatus").style.color = "red";
                   }
                 }
@@ -121,6 +120,7 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
+
                   if(data.status == true){
                     $("#livestatusstatus").html("Live");
                     document.getElementById("livestatusstatus").style.color = "green";
@@ -133,7 +133,7 @@ $(document).ready(function () {
                   }
                 }
             },()=>{});
-            $("#loading").hide();
+            $("#spining").hide();
             document.querySelector(".content").style.display = "none";
             document.querySelector(".container").style.display = "block";
             $("#coursenamestatus").html(data.course_name);
@@ -144,6 +144,7 @@ $(document).ready(function () {
           }else if(data.status == "invalid"){
             $("#error").html("<center><br>Invalid Course ID</center>");
           }
+          $("#spining").hide();
         },
         error: function(response){
          alert(response)
@@ -178,37 +179,16 @@ function update(){
 }
 // function for visual comparison of changes/updates 
 function showChanges(){
-  if(true){
-    const data = {
-      "1": {
-          "Field": "number",
-          "db": "course",
-          "lesson_id": "aFTEREFFECTSTAMILTUTORIAL999",
-          "new": 8,
-          "previous": 1
-      },
-      "2": {
-          "Field": "level",
-          "db": "course",
-          "lesson_id": "aFTEREFFECTSTAMILTUTORIAL",
-          "new": "l1",
-          "previous": "l2"
-      }
+  if(changes.status == true){
+    appendTable(changes.values);
+  }  
+  else{
+    $(".modal-body").empty();
+    $(".modal-title").empty();
+
+    $(".modal-title").html("Message");
+    $(".modal-body").html("No Update Available");
   }
-  appendTable(data);
-  return;
-  }
-  $.ajax({
-    type : 'POST',
-    url : 'http://localhost:5000/course_changes',
-    data : $("#courseId").val(),
-    dataType: "JSON",
-    contentType: "application/json",
-    processData : false,
-    success:function(data){  
-      appendTable(data);
-    },
-});  
 }
 
 function appendTable(data){
@@ -224,20 +204,20 @@ function appendTable(data){
   });
 }
 
-function byPassSecondPage(){
-  document.querySelector(".content").style.display = "none";
-  $("#coursenamestatus").html("data.course_name");
-  $("#courseidstatus").html("data.course_id");
-  $("#courselangstatus").html("data.lang");
+// function byPassSecondPage(){
+//   document.querySelector(".content").style.display = "none";
+//   $("#coursenamestatus").html("data.course_name");
+//   $("#courseidstatus").html("data.course_id");
+//   $("#courselangstatus").html("data.lang");
 
-  $("#livestatusstatus").html("Live");
+//   $("#livestatusstatus").html("Live");
 
-  $("#livestatusstatus").html("No Live");
+//   $("#livestatusstatus").html("No Live");
 
-  $("#updatesstatus").html("Available");
-  document.getElementById("live_check").style.display = "block";
-  document.getElementById("live_close").style.display = "block";
-  //updateBtn.disabled = false;
-  document.getElementById("video_check").style.display = "block";
-  document.querySelector(".container").style.display = "block";
-}
+//   $("#updatesstatus").html("Available");
+//   document.getElementById("live_check").style.display = "block";
+//   document.getElementById("live_close").style.display = "block";
+//   //updateBtn.disabled = false;
+//   document.getElementById("video_check").style.display = "block";
+//   document.querySelector(".container").style.display = "block";
+// }
