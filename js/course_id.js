@@ -138,6 +138,8 @@ $(document).ready(function () {
             $("#coursenamestatus").html(data.course_name);
             $("#courseidstatus").html(data.course_id);
             $("#courselangstatus").html(data.lang);
+            logo_url="https://static.guvi.in/course-thumbnail/webps/"+data.logo+".webp";
+            document.getElementById("image_preview").src=logo_url;
           })
           
           }else if(data.status == "invalid"){
@@ -174,7 +176,65 @@ function update(){
 
   })
 }
+function check_video(){
+  $.ajax({
+method:'POST',
+url: 'http://127.0.0.1:5000/check_video',
+datatype: 'JSON',
+data: {"course_id":course_id},
+contentType: "application/json",
+success: function (data) {
+//data={"status":false,"values":{"0":{"is_yt_video":true,"title":"AI for India","video_url":"v=nfjnvjfnvj"},"1":{"is_yt_video":false,"video_url":"v=nfjnvjfnvj"}}};
+if (data.status == true) {
+document.getElementById("video_check").style.display = "block";
+}
+else {
+document.getElementById("video_status").style.display = "block";
+document.getElementById("video_close").style.display = "block";
+document.getElementById("video_check").style.display = "none";
+var i=Object.keys(data.values).length;
+for (j=0;j<i;j++){
+  str=j.toString();
+  console.log(data.values[str]['is_yt_video']);
+if(data.values[str]['is_yt_video']){
+  document.getElementById('urls').appendChild(document.createElement('tr'));
+  document.getElementById('urls').appendChild(document.createElement('th')).innerHTML=data.values[str]['video_url'];
+  document.getElementById('urls').appendChild(document.createElement('th')).innerHTML=data.values[str]['title'];
+    }
+}
+}
+}
+})
+}
+function check_quiz(){
+  $.ajax({
+    method:'POST',
+    url: 'http://127.0.0.1:5000/check_quiz',
+    datatype: 'JSON',
+    data: {"course_id":course_id},
+    contentType: "application/json",
+    success: function (data) {
+      if (data.status == "True") {
+    document.getElementById("quiz_check").style.display = "block";
 
+  }
+  else {
+    document.getElementById("quiz_status").style.display = "block";
+document.getElementById("quiz_close").style.display = "block";
+document.getElementById("quiz_check").style.display = "none";
+var i=Object.keys(data.values).length;
+for (j=0;j<i;j++){
+  str=j.toString();
+  console.log(data.values[str]['lessonId']);
+  document.getElementById('lessons').appendChild(document.createElement('tr'));
+  document.getElementById('urls').appendChild(document.createElement('th')).innerHTML=data.values[str]['lessonId'];
+    
+}
+   
+}
+    }
+  })
+  }
 function showChanges(){
   let old = JSON.stringify(changes['old']);
   let curr = JSON.stringify(changes['new']);
