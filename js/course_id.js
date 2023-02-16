@@ -21,7 +21,6 @@ else {
         url: "http://127.0.0.1:5000/session_delete",
         data: JSON.stringify(dict),
         success: function (res) {
-          console.log(res)
           window.localStorage.removeItem("key");
           window.localStorage.removeItem("time");
           var page = "./login.html";
@@ -29,15 +28,12 @@ else {
         }
   })
     }
-    else {
-      
-    }
+    
    
   } 
   
   window.setInterval(function(){
     current_date = new Date().getTime()
-    //  console.log(current_date)
     window.localStorage.setItem("time",current_date)
     
     
@@ -49,7 +45,7 @@ $(document).ready(function () {
     e.preventDefault();
     var course_id = document.getElementById("courseId").value;
     if (course_id=="") {
-      $("#error").html("<br>This Field Required");
+      $("#error").html("<center><br>Course ID is required</center>");
     }
     else {
       var dict = {"course_id": $("#courseId").val(), "session_id": session_id};
@@ -61,7 +57,6 @@ $(document).ready(function () {
         data: JSON.stringify(dict),
         contentType: "application/json",
         success: function (data) {
-          console.log(data.status)
           if (data.status == "success") {
             //document.getElementById("course_id_page").style.display = "none";
             $.when(
@@ -72,8 +67,6 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
-                  console.log("working-course_changes api");
-                  console.log(data);
                   if (data.status == true) {
                     $("#updatesstatus").html("Available");
                     document.getElementById("updatesstatus").style.color = "green";
@@ -93,8 +86,6 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
-                  console.log("working-check_video api");
-                  console.log(data);
                   if(data.status == true){
                     document.getElementById("video_check").style.display = "block"
                   }
@@ -112,8 +103,6 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
-                  console.log("working-check_quiz api");
-                  console.log(data);
                   if(data.status == true){
                     document.getElementById("quiz_check").style.display = "block"
                   }
@@ -131,8 +120,6 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
-                  console.log("working-check_live api");
-                  console.log(data);
                   if(data.status == true){
                     $("#livestatusstatus").html("Live");
                     document.getElementById("livestatusstatus").style.color = "green";
@@ -152,10 +139,12 @@ $(document).ready(function () {
             $("#courselangstatus").html(data.lang);
           })
           
+          }else if(data.status == "invalid"){
+            $("#error").html("<center><br>Invalid Course ID</center>");
           }
         },
         error: function(response){
-          console.log(response);
+         alert(response)
         }
       });
         }

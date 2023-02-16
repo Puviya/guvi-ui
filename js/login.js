@@ -20,19 +20,15 @@ if (session_id) {
 }
 $(document).ready(function () {
     $("#btnlogin").click(function () {
-        if($("#username").val()=="" && $("#password").val()==""){
+        if(($("#username").val()).trim()=="" && ($("#password").val()).trim()==""){
             $("#error").html("All fields are required")
         }
-        else if($("#username").val()==""){
-            $("#error").hide()
-            $("#passcheck").hide()
-            $("#usercheck").html("Enter Username")
-        }else if($("#password").val()==""){
-            $("#error").hide()
-            $("#usercheck").hide()
-            $("#passcheck").html("Enter Password")
+        else if(($("#username").val()).trim()==""){
+            $("#error").html("Username is required")
+        }else if(($("#password").val()).trim()==""){
+            $("#error").html("Password is required")
         }
-        
+        else{
         const data = {"username":$("#username").val(),"password":$("#password").val()}
 
         
@@ -61,6 +57,6 @@ $(document).ready(function () {
             error: function(response){
                 console.log(response)
             }
-        }); 
+        }); }
     });
 });

@@ -10,8 +10,8 @@ $(document).ready(function () {
                 if(data.status == "success"){
                     localStorage.removeItem('time');
                     localStorage.removeItem('key');
-                   
                 }
+                localStorage.removeItem('time');
                 window.location.href="login.html"; 
                 
             }
