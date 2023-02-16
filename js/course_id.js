@@ -134,7 +134,7 @@ $(document).ready(function () {
                 }
             },()=>{});
             document.querySelector(".content").style.display = "none";
-            document.querySelector(".container").style.display = "block";
+             document.querySelector(".container").style.display = "block";
             $("#coursenamestatus").html(data.course_name);
             $("#courseidstatus").html(data.course_id);
             $("#courselangstatus").html(data.lang);
