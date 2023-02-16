@@ -1,6 +1,6 @@
 var session_id = window.localStorage.getItem('key');
 var changes;
-
+let video, quiz;
 
 if (!session_id) {
     var page = "./login.html";
@@ -87,12 +87,17 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
-                  if(data.status == true){
-                    document.getElementById("video_check").style.display = "block"
+                  video = data;
+                  if(data.status == true || data.status == false){
+                    $("#livestatusstatus").html("Live");
+                    document.getElementById("livestatusstatus").style.color = "green";
                   }
-                  else{
-                    document.getElementById("video_close").style.display = "block";
-                    document.getElementById("video_check").style.display = "none";
+                  else if(data.status == null){
+                    $("#livestatusstatus").html("No Live");
+                    document.getElementById("livestatusstatus").style.color = "red";
+                  }
+                  else if(data.status == "login"){
+                    window.location.href = "./login.html";
                   }
                 }
               }),
@@ -104,13 +109,7 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
-                  if(data.status == true){
-                    document.getElementById("quiz_check").style.display = "block"
-                  }
-                  else{
-                    document.getElementById("quiz_close").style.display = "block";
-                    document.getElementById("quiz_check").style.display = "none";
-                  }
+                  quiz = data;
                 }
               })
             ).then(()=>{
@@ -121,14 +120,9 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
-
-                  if(data.status == true){
-                    $("#livestatusstatus").html("Live");
-                    document.getElementById("livestatusstatus").style.color = "green";
+                  if(video.status == true && quiz.status == true && data.status == true){
                     document.getElementById("live_check").style.display = "block";
                   }else {
-                    $("#livestatusstatus").html("No Live");
-                    document.getElementById("livestatusstatus").style.color = "red";
                     document.getElementById("live_check").style.display = "none";
                     document.getElementById("live_close").style.display = "block";
                   }
@@ -181,64 +175,48 @@ function update(){
   })
 }
 function check_video(){
-  $.ajax({
-method:'POST',
-url: 'http://127.0.0.1:5000/check_video',
-datatype: 'JSON',
-data: {"course_id":course_id},
-contentType: "application/json",
-success: function (data) {
-//data={"status":false,"values":{"0":{"is_yt_video":true,"title":"AI for India","video_url":"v=nfjnvjfnvj"},"1":{"is_yt_video":false,"video_url":"v=nfjnvjfnvj"}}};
-if (data.status == true) {
-document.getElementById("video_check").style.display = "block";
-}
-else {
-document.getElementById("video_status").style.display = "block";
-document.getElementById("video_close").style.display = "block";
-document.getElementById("video_check").style.display = "none";
-var i=Object.keys(data.values).length;
-for (j=0;j<i;j++){
-  str=j.toString();
-  console.log(data.values[str]['is_yt_video']);
-if(data.values[str]['is_yt_video']){
-  document.getElementById('urls').appendChild(document.createElement('tr'));
-  document.getElementById('urls').appendChild(document.createElement('th')).innerHTML=data.values[str]['video_url'];
-  document.getElementById('urls').appendChild(document.createElement('th')).innerHTML=data.values[str]['title'];
+  //data={"status":false,"values":{"0":{"is_yt_video":true,"title":"AI for India","video_url":"v=nfjnvjfnvj"},"1":{"is_yt_video":false,"video_url":"v=nfjnvjfnvj"}}};
+  if (video.status == true) {
+    document.getElementById("video_check").style.display = "block";
+  }
+  else {
+    document.getElementById("video_status").style.display = "block";
+    document.getElementById("video_close").style.display = "block";
+    document.getElementById("video_check").style.display = "none";
+    var i=Object.keys(video.values).length;
+    for (j=0;j<i;j++){
+      str=j.toString();
+      console.log(video.values[str]['is_yt_video']);
+      if(video.values[str]['is_yt_video']){
+        document.getElementById('urls').appendChild(document.createElement('tr'));
+        document.getElementById('urls').appendChild(document.createElement('th')).innerHTML=video.values[str]['video_url'];
+        document.getElementById('urls').appendChild(document.createElement('th')).innerHTML=video.values[str]['title'];
+      }
     }
+  }
 }
-}
-}
-})
-}
+
 function check_quiz(){
-  $.ajax({
-    method:'POST',
-    url: 'http://127.0.0.1:5000/check_quiz',
-    datatype: 'JSON',
-    data: {"course_id":course_id},
-    contentType: "application/json",
-    success: function (data) {
-      if (data.status == "True") {
+  if (quiz.status == "True") {
     document.getElementById("quiz_check").style.display = "block";
 
   }
   else {
     document.getElementById("quiz_status").style.display = "block";
-document.getElementById("quiz_close").style.display = "block";
-document.getElementById("quiz_check").style.display = "none";
-var i=Object.keys(data.values).length;
-for (j=0;j<i;j++){
-  str=j.toString();
-  console.log(data.values[str]['lessonId']);
-  document.getElementById('lessons').appendChild(document.createElement('tr'));
-  document.getElementById('urls').appendChild(document.createElement('th')).innerHTML=data.values[str]['lessonId'];
-    
-}
-   
-}
+    document.getElementById("quiz_close").style.display = "block";
+    document.getElementById("quiz_check").style.display = "none";
+    var i=Object.keys(quiz.values).length;
+    for (j=0;j<i;j++){
+      str=j.toString();
+      console.log(quiz.values[str]['lessonId']);
+      document.getElementById('lessons').appendChild(document.createElement('tr'));
+      document.getElementById('urls').appendChild(document.createElement('th')).innerHTML=quiz.values[str]['lessonId'];
+
     }
-  })
+   
   }
+}
+
 function showChanges(){
   if(changes.status == true){
     appendTable(changes.values);
