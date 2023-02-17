@@ -37,15 +37,26 @@ else {
   },1000)
 }
 
-$(document).ready(function () {
-  $("#course_form").submit(function (e) {
-    e.preventDefault();
-    var course_id = document.getElementById("courseId").value;
+function getDetails(course_id){
+    let status;
     if (course_id=="") {
       $("#error").html("<center><br>Course ID is required</center>");
     }
     else {
-      var dict = {"course_id": $("#courseId").val(), "session_id": session_id};
+      const url = new URL(window.location.href)
+      const id = url.searchParams.get("courseId") || "";
+      if(id == "" || id != course_id){
+        url.searchParams.set("courseId", course_id);
+        window.history.pushState({}, '', url)
+      }
+      // else{
+      //   if(url.searchParams.get("courseId")!=course_id){
+      //     url.searchParams.set("course_id") = course_id;
+      //   }
+      // }
+      
+
+      var dict = {"course_id": course_id, "session_id": session_id};
       $("#spining").show();
       $.ajax({
         method: 'POST',
@@ -54,6 +65,7 @@ $(document).ready(function () {
         data: JSON.stringify(dict),
         contentType: "application/json",
         success: function (data) {
+          status = data.status;
           if (data.status == "success") {
             //document.getElementById("course_id_page").style.display = "none";
             $.when(
@@ -143,17 +155,25 @@ $(document).ready(function () {
                 }
             },()=>{});
             $("#spining").hide();
-            document.querySelector(".content").style.display = "none";
-             document.querySelector(".container").style.display = "block";
-            $("#coursenamestatus").html(data.course_name);
-            $("#courseidstatus").html(data.course_id);
-            $("#courselangstatus").html(data.lang);
-            logo_url="https://static.guvi.in/course-thumbnail/webps/"+data.logo+".webp";
-            document.getElementById("image_preview").src=logo_url;
+            if(new URL(window.location.href).searchParams.get("courseId")==course_id){
+              document.querySelector(".content").style.display = "none";
+              document.querySelector(".container").style.display = "block";
+              $("#coursenamestatus").html(data.course_name);
+              $("#courseidstatus").html(data.course_id);
+              $("#courselangstatus").html(data.lang);
+              logo_url="https://static.guvi.in/course-thumbnail/webps/"+data.logo+".webp";
+              document.getElementById("image_preview").src=logo_url;
+            }
+            else{
+              console.log("check url");
+            }
           })
           
           }else if(data.status == "invalid"){
             $("#error").html("<center><br>Invalid Course ID</center>");
+            $("#loader").hide();
+            document.querySelector(".container").style.display = "none";
+            document.querySelector(".content").style.display = "block";
           }
           $("#spining").hide();
         },
@@ -161,9 +181,36 @@ $(document).ready(function () {
          alert(response)
         }
       });
-        }
-      });
+    }
+
+    return status;
+}
+
+function checkQueryParams(){
+  const course_id = new URL(window.location.href).searchParams.get("courseId") || "";
+  
+  if(course_id != ""){
+    document.querySelector(".content").style.display = "none";
+    getDetails(course_id);
+  }
+
+}
+
+$(document).ready(function () {
+  checkQueryParams();
+
+  $("#course_form").submit(function (e) {
+    e.preventDefault();
+    var course_id = document.getElementById("courseId").value;
+    getDetails(course_id);
   });
+
+  window.addEventListener('popstate', (event) => {
+    const url = window.location.href.split("?")[0];
+    window.location.href =  url;
+  });
+
+});
 
 function update(){
   if(changes.status == true){
