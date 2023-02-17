@@ -165,7 +165,7 @@
             <div class="col">
               <span><p>Video Integrity</p></span>
               <span><p>Quiz integrity</p></span>
-              <span><p>Ready to take Live</p></span>
+              <span><p>Ready to take Live</p></span>  
             </div>
             <div class="col">
               <p>
@@ -189,6 +189,43 @@
 
 <!-- visual comparison of changes/updates in modal -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+<!-- Modal header content-->
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Changes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+<!-- Modal body content -->
+      <div class="modal-body">
+          <table class="table table-bordered">
+              <thead>
+                  <tr >
+                      <th  scope="col"></th>
+                      <th  scope="col">Lesson</th>
+                      <th  scope="col">Field</th>
+                      <th  scope="col">old</th>
+                      <th  scope="col">new</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table"></tbody>
+              </tbody>
+            </table>
+      </div>
+<!-- Footer content -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- No updates - unavailable -->
+<!-- visual comparison of changes/updates in modal -->
+<div class="modal fade" id="Backdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
 <!-- Modal header content-->

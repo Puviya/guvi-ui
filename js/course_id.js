@@ -113,25 +113,46 @@ function update(){
   })
 }
 // function for visual comparison of changes/updates 
+var count = 0;
 function showChanges(){
-  if(true){
-    const data = {
-      "1": {
-          "Field": "number",
-          "db": "course",
-          "lesson_id": "aFTEREFFECTSTAMILTUTORIAL999",
-          "new": 8,
-          "previous": 1
-      },
-      "2": {
-          "Field": "level",
-          "db": "course",
-          "lesson_id": "aFTEREFFECTSTAMILTUTORIAL",
-          "new": "l1",
-          "previous": "l2"
-      }
-  }
-  appendTable(data);
+  if(true && count==0){
+  //   const data = {
+  //     "1": {
+  //         "Field": "number",
+  //         "db": "course",
+  //         "lesson_id": "aFTEREFFECTSTAMILTUTORIAL999",
+  //         "new": 8,
+  //         "previous": 1
+  //     },
+  //     "2": {
+  //         "Field": "level",
+  //         "db": "course",
+  //         "lesson_id": "aFTEREFFECTSTAMILTUTORIAL",
+  //         "new": "l1",
+  //         "previous": "l2"
+  //     }
+  // }
+  const data = {
+    "status": true,
+    "values": {
+        "1": {
+            "Field": "number",
+            "db": "course",
+            "lesson_id": "aFTEREFFECTSTAMILTUTORIAL",
+            "new": 4,
+            "previous": 1
+        },
+        "2": {
+            "Field": "level",
+            "db": "course",
+            "lesson_id": "aFTEREFFECTSTAMILTUTORIAL",
+            "new": "l3",
+            "previous": "l2"
+        }
+    }
+}
+  appendTable(data.values);
+  count=1;
   return;
   }
   $.ajax({
@@ -177,3 +198,26 @@ function byPassSecondPage(){
   document.getElementById("video_check").style.display = "block";
   document.querySelector(".container").style.display = "block";
 }
+
+// ,
+//         "3": {
+//           "Field": "level",
+//           "db": "course",
+//           "lesson_id": "aFTEREFFECTSTAMILTUTORIAL",
+//           "new": "l3",
+//           "previous": "l2"
+//         },
+//         "4": {
+//           "Field": "level",
+//           "db": "course",
+//           "lesson_id": "aFTEREFFECTSTAMILTUTORIAL",
+//           "new": "l3",
+//           "previous": "l2"
+//       },
+//       "5": {
+//         "Field": "level",
+//         "db": "qui",
+//         "lesson_id": "aFTEREFFECTSTAMILTUTORIAL",
+//         "new": "l3",
+//         "previous": "l2"
+//     }
