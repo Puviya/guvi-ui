@@ -1,6 +1,6 @@
 var session_id = window.localStorage.getItem('key');
 var changes;
-
+let video, quiz;
 
 if (!session_id) {
     var page = "./login.html";
@@ -70,11 +70,13 @@ $(document).ready(function () {
                   changes = data;
                   if (data.status == true) {
                     $("#updatesstatus").html("Available");
+                    document.getElementById("update_btn").disabled = false;
                     document.getElementById("updatesstatus").style.color = "green";
                   
                   }
                   else {
                     $("#updatesstatus").html("Unavailable");
+                    document.getElementById("update_btn").disabled = true;
                     document.getElementById("updatesstatus").style.color = "red";
                   }
                 }
@@ -87,10 +89,21 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
+                  video = data;
+                  if(data.status == true || data.status == false){
+                    $("#livestatusstatus").html("Live");
+                    document.getElementById("livestatusstatus").style.color = "green";
+                  }
+                  else if(data.status == null){
+                    $("#livestatusstatus").html("No Live");
+                    document.getElementById("livestatusstatus").style.color = "red";
+                  }
+
                   if(data.status == true){
                     document.getElementById("video_check").style.display = "block"
                   }
-                  else{
+                  else if(data.status == false){
+                    document.getElementById("video_link").innerHTML = "<a href='#'>(Video availability)</a>";
                     document.getElementById("video_close").style.display = "block";
                     document.getElementById("video_check").style.display = "none";
                   }
@@ -104,10 +117,12 @@ $(document).ready(function () {
                 data: JSON.stringify(dict),
                 contentType: "application/json",
                 success: function(data){
+                  quiz = data;
                   if(data.status == true){
                     document.getElementById("quiz_check").style.display = "block"
                   }
-                  else{
+                  else if(data.status == false){
+                    document.getElementById("quiz_link").innerHTML = "<a href='#'>(Quiz availability)</a>";
                     document.getElementById("quiz_close").style.display = "block";
                     document.getElementById("quiz_check").style.display = "none";
                   }
@@ -122,13 +137,9 @@ $(document).ready(function () {
                 contentType: "application/json",
                 success: function(data){
 
-                  if(data.status == true){
-                    $("#livestatusstatus").html("Live");
-                    document.getElementById("livestatusstatus").style.color = "green";
+                  if(video.status == true && quiz.status == true && data.status == true){
                     document.getElementById("live_check").style.display = "block";
                   }else {
-                    $("#livestatusstatus").html("No Live");
-                    document.getElementById("livestatusstatus").style.color = "red";
                     document.getElementById("live_check").style.display = "none";
                     document.getElementById("live_close").style.display = "block";
                   }
@@ -164,84 +175,91 @@ $(document).ready(function () {
 
 function update(){
   //prompt("Changes :\n", JSON.stringify(changes));
-  $.ajax({
-    method: 'POST',
-    url: 'http://127.0.0.1:5000/update',
-    datatype: 'json',
-    data: JSON.stringify(updates_det),
-    contentType: "application/json",
-    success: function (data) {
-      $("#loading").hide();
-      if(data.update_status == "update_success"){
-        alert("Update success!!!!");
-        window.location.href = "course_id.html";
+  if(changes.status == true){
+    $.ajax({
+      method: 'POST',
+      url: 'http://127.0.0.1:5000/update',
+      datatype: 'json',
+      data: JSON.stringify(changes.values),
+      contentType: "application/json",
+      success: function (data) {
+        $("#loading").hide();
+        if(data.update_status == "success"){
+          alert("Update success!!!!");
+        }
       }
-    }
-
-  })
+  
+    })
+  }
+  
 }
 function check_video(){
-  $.ajax({
-method:'POST',
-url: 'http://127.0.0.1:5000/check_video',
-datatype: 'JSON',
-data: {"course_id":course_id},
-contentType: "application/json",
-success: function (data) {
-//data={"status":false,"values":{"0":{"is_yt_video":true,"title":"AI for India","video_url":"v=nfjnvjfnvj"},"1":{"is_yt_video":false,"video_url":"v=nfjnvjfnvj"}}};
-if (data.status == true) {
-document.getElementById("video_check").style.display = "block";
+  if(video.status == false){
+    var head = `<table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Topic</th>
+                    <th>Remarks</th>
+                    <th>Link</th>
+                  </tr>
+                </thead>
+                <tbody id="video-body"></tbody>
+                </table>`
+
+    $(".modal-body").empty();
+    $(".modal-title").empty();
+    $(".modal-title").html("Youtube link available");
+    $(".modal-body").html(head);
+      Object.keys(video.values).forEach(element => {
+        var row =  `<tr><td >${video.values[element].title}</td>`;
+        if (video.values[element].is_yt_video == true){
+          row += `<td >youtube video</td>`;
+        }
+        else{
+          row += `<td>No video</td>`;
+        }
+        
+        row += `<td >${video.values[element].video_url}</td></tr>`;
+     $("#video-body").append(row);
+      });
+  }
 }
-else {
-document.getElementById("video_status").style.display = "block";
-document.getElementById("video_close").style.display = "block";
-document.getElementById("video_check").style.display = "none";
-var i=Object.keys(data.values).length;
-for (j=0;j<i;j++){
-  str=j.toString();
-  console.log(data.values[str]['is_yt_video']);
-if(data.values[str]['is_yt_video']){
-  document.getElementById('urls').appendChild(document.createElement('tr'));
-  document.getElementById('urls').appendChild(document.createElement('th')).innerHTML=data.values[str]['video_url'];
-  document.getElementById('urls').appendChild(document.createElement('th')).innerHTML=data.values[str]['title'];
-    }
-}
-}
-}
-})
-}
+
 function check_quiz(){
-  $.ajax({
-    method:'POST',
-    url: 'http://127.0.0.1:5000/check_quiz',
-    datatype: 'JSON',
-    data: {"course_id":course_id},
-    contentType: "application/json",
-    success: function (data) {
-      if (data.status == "True") {
-    document.getElementById("quiz_check").style.display = "block";
+  //quiz.values={"0":{"topic":"jdvjfbv"},"1":{"topic":"cbdjbcd"}}
+  if(quiz.status == false){
+    var head = `<table id="urls" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Topic</th>
+                    <th>Remarks</th>
+                  </tr>
+                </thead>
+                <tbody id="quiz-body"></tbody>
+                </table>`
+
+    $(".modal-body").empty();
+    $(".modal-title").empty();
+    $(".modal-title").html("Quiz");
+    $(".modal-body").html(head);
+      Object.keys(quiz.values).forEach(element => {
+        var row =  `<tr><td >${quiz.values[element].topic}</td>
+                    <td >Missing</td></tr>`;
+
+     $("#quiz-body").append(row);
+      });
+  }
+   
 
   }
-  else {
-    document.getElementById("quiz_status").style.display = "block";
-document.getElementById("quiz_close").style.display = "block";
-document.getElementById("quiz_check").style.display = "none";
-var i=Object.keys(data.values).length;
-for (j=0;j<i;j++){
-  str=j.toString();
-  console.log(data.values[str]['lessonId']);
-  document.getElementById('lessons').appendChild(document.createElement('tr'));
-  document.getElementById('urls').appendChild(document.createElement('th')).innerHTML=data.values[str]['lessonId'];
-    
-}
-   
-}
-    }
-  })
-  }
+
+let flag = 0;
 function showChanges(){
   if(changes.status == true){
-    appendTable(changes.values);
+    if(flag == 0){
+      appendTable(changes.values);
+      flag = 1;
+    }
   }  
   else{
     $(".modal-body").empty();
@@ -256,13 +274,32 @@ function appendTable(data){
   Object.keys(data).forEach(element => {
       var row =  `<tr>
           <td >${data[element].db}</td>
-          <td >${data[element].lesson_id}</td>
+          <td >${data[element].lessonId}</td>
           <td >${data[element].Field}</td>
           <td >${data[element].previous}</td>
           <td >${data[element].new}</td>
       </tr>`
  $("#table").append(row);
   });
+}
+
+function appendVideo(){
+
+  var head = `<table id="urls" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Link</th>
+                  <th>Topic</th>
+                </tr>
+              </thead>
+              <tbody id="video-body"></tbody>
+              </table>`
+
+  $(".modal-body").empty();
+  $(".modal-title").empty();
+  $(".modal-title").html("Youtube link available");
+  $(".modal-body").html(head);
+
 }
 
 // function byPassSecondPage(){

@@ -169,8 +169,8 @@
           <p class="h5 font-weight-bold">Diagnostics</p>
           <div class="row">
             <div class="col">
-              <span><p>Video Integrity</p></span>
-              <span><p>Quiz integrity</p></span>
+              <span><p>Video Integrity <span id="video_link" onclick="check_video()" data-toggle="modal" data-target="#staticBackdrop"></span></p></span>
+              <span><p>Quiz integrity <span id="quiz_link" onclick="check_quiz()" data-toggle="modal" data-target="#staticBackdrop"></span></p></span>
               <span><p>Ready to take Live</p></span>
             </div>
             <div class="col">
@@ -186,11 +186,8 @@
                 <i id="live_check" class="fa fa-check text-success" ></i>
                 <i id="live_close" class="fa fa-close text-danger" ></i>
               </p>
-            </div>
-            <div class="col">
-              <p>
-                <span id="video_link" onclick="">Youtube link available</span>
-                <div class="modal" id="video_status" >
+            </div>    
+              <!-- <div class="modal" id="video_status" >
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -204,7 +201,7 @@
                               <th>Link</th>
                               <th>Topic</th>
                             </tr>
-                          </thead>
+                           </thead>
                         </table>
                       </div>
                       <div class="modal-footer">
@@ -241,7 +238,7 @@
         </div>
       </div>
     </div> 
-  </div>
+  </div> -->
 
 <!-- visual comparison of changes/updates in modal -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
