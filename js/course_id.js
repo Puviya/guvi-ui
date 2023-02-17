@@ -8,7 +8,6 @@ if (!session_id) {
 }
 
 else {
-  
   const toMilliseconds = (hrs,min,sec) => (hrs*60*60+min*60+sec)*1000;
   let hr=toMilliseconds(0,15,0);
   var dict = {"session_id":session_id};
@@ -33,10 +32,8 @@ else {
   } 
   
   window.setInterval(function(){
-    current_date = new Date().getTime()
-    window.localStorage.setItem("time",current_date)
-    
-    
+    current_date = new Date().getTime();
+    window.localStorage.setItem("time",current_date);
   },1000)
 }
 
@@ -165,16 +162,10 @@ $(document).ready(function () {
         }
       });
         }
-       
-          
       });
-    
   });
 
-
-
 function update(){
-  //prompt("Changes :\n", JSON.stringify(changes));
   if(changes.status == true){
     $.ajax({
       method: 'POST',
@@ -188,11 +179,10 @@ function update(){
           alert("Update success!!!!");
         }
       }
-  
     })
   }
-  
 }
+
 function check_video(){
   if(video.status == false){
     var head = `<table class="table table-striped">
@@ -302,20 +292,3 @@ function appendVideo(){
 
 }
 
-// function byPassSecondPage(){
-//   document.querySelector(".content").style.display = "none";
-//   $("#coursenamestatus").html("data.course_name");
-//   $("#courseidstatus").html("data.course_id");
-//   $("#courselangstatus").html("data.lang");
-
-//   $("#livestatusstatus").html("Live");
-
-//   $("#livestatusstatus").html("No Live");
-
-//   $("#updatesstatus").html("Available");
-//   document.getElementById("live_check").style.display = "block";
-//   document.getElementById("live_close").style.display = "block";
-//   //updateBtn.disabled = false;
-//   document.getElementById("video_check").style.display = "block";
-//   document.querySelector(".container").style.display = "block";
-// }
