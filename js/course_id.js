@@ -57,7 +57,9 @@ function getDetails(course_id){
       
 
       var dict = {"course_id": course_id, "session_id": session_id};
+      // document.getElementById("loader").style.display = "block";
       $("#spining").show();
+      $("#loader").show();
       $.ajax({
         method: 'POST',
         url: 'http://127.0.0.1:5000/course_status',
@@ -154,6 +156,7 @@ function getDetails(course_id){
                   }
                 }
             },()=>{});
+            $("#loader").hide()
             $("#spining").hide();
             if(new URL(window.location.href).searchParams.get("courseId")==course_id){
               document.querySelector(".content").style.display = "none";
@@ -171,10 +174,10 @@ function getDetails(course_id){
           
           }else if(data.status == "invalid"){
             $("#error").html("<center><br>Invalid Course ID</center>");
-            $("#loader").hide();
             document.querySelector(".container").style.display = "none";
             document.querySelector(".content").style.display = "block";
           }
+          $("#loader").hide();
           $("#spining").hide();
         },
         error: function(response){
@@ -197,6 +200,7 @@ function checkQueryParams(){
 }
 
 $(document).ready(function () {
+  $("#loader").hide();
   checkQueryParams();
 
   $("#course_form").submit(function (e) {
@@ -280,7 +284,7 @@ function check_quiz(){
     $(".modal-title").html("Quiz");
     $(".modal-body").html(head);
       Object.keys(quiz.values).forEach(element => {
-        var row =  `<tr><td >${quiz.values[element].topic}</td>
+        var row =  `<tr><td >${quiz.values[element].lessonId}</td>
                     <td >Missing</td></tr>`;
 
      $("#quiz-body").append(row);
@@ -290,33 +294,53 @@ function check_quiz(){
 
   }
 
-let flag = 0;
 function showChanges(){
+  $(".modal-body").empty();
+  $(".modal-title").empty();
+
   if(changes.status == true){
-    if(flag == 0){
-      appendTable(changes.values);
-      flag = 1;
-    }
+    var head = `<table class="table table-bordered">
+    <thead>
+        <tr >
+            <th  scope="col">Field</th>
+            <th  scope="col">Action</th>
+            <th  scope="col">Course ID</th>
+            <th  scope="col">Database</th>
+            <th  scope="col">Lession ID</th>
+            <th  scope="col">New</th>
+            <th  scope="col">Previous</th>
+          </tr>
+        </thead>
+        <tbody id="table"></tbody>
+    </tbody>
+  </table>`
+    $(".modal-title").html("Changes");
+    $(".modal-body").html(head);
+    appendTable(changes.values);
+    // flag = 1;
+    
   }  
   else{
-    $(".modal-body").empty();
-    $(".modal-title").empty();
-
     $(".modal-title").html("Message");
     $(".modal-body").html("No Update Available");
   }
 }
 
 function appendTable(data){
+  const arr = ["Field","action","course_id","db","lessonId","new","previous"];
   Object.keys(data).forEach(element => {
-      var row =  `<tr>
-          <td >${data[element].db}</td>
-          <td >${data[element].lessonId}</td>
-          <td >${data[element].Field}</td>
-          <td >${data[element].previous}</td>
-          <td >${data[element].new}</td>
-      </tr>`
- $("#table").append(row);
+    var row = "<tr>";//row ="";
+    arr.forEach(e=>{
+      var row_data;
+      if(data[element].hasOwnProperty(e))
+        row_data = data[element][e]
+      else{
+        row_data = "-";
+      }
+      row =  row + "<td >"+row_data+"</td>"
+  })
+    $("#table").append(row+"</tr>");
+    //`<tr>{row}</tr>`
   });
 }
 

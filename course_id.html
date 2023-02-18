@@ -75,13 +75,14 @@
           margin-bottom: 20px;
         }
       }
+
+      .loader-container {
+        display: grid;
+        place-content: center;
+      }
     </style>
   </head>
   <body>
-    <!-- Loader -->
-    <div class="d-flex justify-content-center"  id="loader">
-      <div class="spinner-border" style="width: 3rem; height: 3rem; display: none" role="status"></div>
-    </div>
 
     <!-- content -->
     <div id="course_id_page">
@@ -93,6 +94,12 @@
         </div>
       </nav>
     </div>
+
+    <!-- Loader -->
+    <div class="loader-container"  id="loader">
+      <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"></div>
+    </div>
+
     <div class="content">
       <div class="align-self-center">
         <div class="row justify-content-center">
@@ -179,50 +186,31 @@
           <table class="table table-borderless">
             <tbody>
               <tr>
-                <td><span><p>Video Integrity <span id="video_link" onclick="check_video()" data-toggle="modal" data-target="#staticBackdrop"></span></p></span></td>
-                <td><p>
+                <td><span>Video Integrity <span id="video_link" onclick="check_video()" data-toggle="modal" data-target="#staticBackdrop"></span></span></td>
+                <td>
                   <i id="video_check" class="fa fa-check text-success" ></i>
                   <i id="video_close" class="fa fa-close text-danger" ></i>
-                </p></td>
+                </td>
               </tr>
               <tr>
-                <td><span><p>Quiz integrity <span id="quiz_link" onclick="check_quiz()" data-toggle="modal" data-target="#staticBackdrop"></span></p></span></td>
-                <td><p>
+                <td><span>Quiz integrity <span id="quiz_link" onclick="check_quiz()" data-toggle="modal" data-target="#staticBackdrop"></span></span></td>
+                <td>
                   <i id="quiz_check" class="fa fa-check text-success" ></i>
                   <i id="quiz_close" class="fa fa-close text-danger" ></i>
-                </p></td>
+                </td>
               </tr>
               <tr>
-                <td><span><p>Ready to take Live</p></span></td>
-                <td><p>
+                <td><span>Ready to take Live</span></td>
+                <td>
                   <i id="live_check" class="fa fa-check text-success" ></i>
                   <i id="live_close" class="fa fa-close text-danger" ></i>
-                </p></td>
+                </td>
               </tr>
             </tbody>
           </table>
-          <!-- <div class="row">
-            <div class="col">
-              <span><p>Video Integrity <span id="video_link" onclick="check_video()" data-toggle="modal" data-target="#staticBackdrop"></span></p></span>
-              <span><p>Quiz integrity <span id="quiz_link" onclick="check_quiz()" data-toggle="modal" data-target="#staticBackdrop"></span></p></span>
-              <span><p>Ready to take Live</p></span>
-            </div>
-            <div class="col">
-              <p>
-                <i id="video_check" class="fa fa-check text-success" ></i>
-                <i id="video_close" class="fa fa-close text-danger" ></i>
-              </p>
-              <p>
-                <i id="quiz_check" class="fa fa-check text-success" ></i>
-                <i id="quiz_close" class="fa fa-close text-danger" ></i>
-              </p>
-              <p>
-                <i id="live_check" class="fa fa-check text-success" ></i>
-                <i id="live_close" class="fa fa-close text-danger" ></i>
-              </p>
-            </div>    
-          </div> -->
-
+          <div>
+            <button class="btn btn-success btn-sm" disabled>Take Live</button>
+          </div>
           </div>
         </div>
       </div>
@@ -230,7 +218,7 @@
 
 <!-- visual comparison of changes/updates in modal -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
 <!-- Modal header content-->
       <div class="modal-header">
@@ -244,11 +232,13 @@
           <table class="table table-bordered">
               <thead>
                   <tr >
-                      <th  scope="col"></th>
-                      <th  scope="col">Lesson</th>
                       <th  scope="col">Field</th>
-                      <th  scope="col">old</th>
-                      <th  scope="col">new</th>
+                      <th  scope="col">Action</th>
+                      <th  scope="col">Course ID</th>
+                      <th  scope="col">Database</th>
+                      <th  scope="col">Lession ID</th>
+                      <th  scope="col">New</th>
+                      <th  scope="col">Previous</th>
                     </tr>
                   </thead>
                   <tbody id="table"></tbody>
