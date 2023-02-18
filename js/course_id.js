@@ -59,7 +59,6 @@ function getDetails(course_id){
       var dict = {"course_id": course_id, "session_id": session_id};
       // document.getElementById("loader").style.display = "block";
       $("#spining").show();
-      $("#loader").show();
       $.ajax({
         method: 'POST',
         url: 'http://127.0.0.1:5000/course_status',
@@ -150,13 +149,14 @@ function getDetails(course_id){
 
                   if(video.status == true && quiz.status == true && data.status == true){
                     document.getElementById("live_check").style.display = "block";
+                    document.getElementById("take-live").disabled = false;
                   }else {
                     document.getElementById("live_check").style.display = "none";
+                    document.getElementById("take-live").disabled = true;
                     document.getElementById("live_close").style.display = "block";
                   }
                 }
             },()=>{});
-            $("#loader").hide()
             $("#spining").hide();
             if(new URL(window.location.href).searchParams.get("courseId")==course_id){
               document.querySelector(".content").style.display = "none";
@@ -194,6 +194,7 @@ function checkQueryParams(){
   
   if(course_id != ""){
     document.querySelector(".content").style.display = "none";
+    $("#loader").show();
     getDetails(course_id);
   }
 
