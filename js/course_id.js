@@ -169,17 +169,34 @@ function showChanges(){
 }
 
 function appendTable(data){
+  const arr = ["Field","action","course_id","db","lessonId","new","previous"];
   Object.keys(data).forEach(element => {
-      var row =  `<tr>
-          <td >${data[element].db}</td>
-          <td >${data[element].lesson_id}</td>
-          <td >${data[element].Field}</td>
-          <td >${data[element].previous}</td>
-          <td >${data[element].new}</td>
-      </tr>`
- $("#table").append(row);
+    var row = "<tr>";//row ="";
+    arr.forEach(e=>{
+      var row_data;
+      if(data[element].hasOwnProperty(e))
+        row_data = data[element][e]
+      else{
+        row_data = "-";
+      }
+      row =  row + "<td >"+row_data+"</td>"
+  })
+    $("#table").append(row+"</tr>");
+    //`<tr>{row}</tr>`
   });
 }
+// function appendTable(data){
+//   Object.keys(data).forEach(element => {
+//       var row =  `<tr>
+//           <td >${data[element].db}</td>
+//           <td >${data[element].lesson_id}</td>
+//           <td >${data[element].Field}</td>
+//           <td >${data[element].previous}</td>
+//           <td >${data[element].new}</td>
+//       </tr>`
+//  $("#table").append(row);
+//   });
+// }
 
 function byPassSecondPage(){
   document.querySelector(".content").style.display = "none";
