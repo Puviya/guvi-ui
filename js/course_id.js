@@ -112,7 +112,7 @@ function getDetails(course_id){
                     document.getElementById("video_check").style.display = "block"
                   }
                   else if(data.status == false){
-                    document.getElementById("video_link").innerHTML = "<a href='#'>(Video availability)</a>";
+                    document.getElementById("video_link").innerHTML = "(Video availability)";
                     document.getElementById("video_close").style.display = "block";
                     document.getElementById("video_check").style.display = "none";
                   }
@@ -131,7 +131,7 @@ function getDetails(course_id){
                     document.getElementById("quiz_check").style.display = "block"
                   }
                   else if(data.status == false){
-                    document.getElementById("quiz_link").innerHTML = "<a href='#'>(Quiz availability)</a>";
+                    document.getElementById("quiz_link").innerHTML = "(Quiz availability)";
                     document.getElementById("quiz_close").style.display = "block";
                     document.getElementById("quiz_check").style.display = "none";
                   }
